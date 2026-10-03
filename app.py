@@ -1,4 +1,5 @@
 import pickle
+import zipfile
 from pathlib import Path
 
 import numpy as np
@@ -8,7 +9,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 ARTIFACTS = Path(__file__).parent / "Artifacts"
-MODEL_PATH = ARTIFACTS / "BiGRU_Model.keras"   # file name exactly as saved in the notebook
+MODEL_PATH = ARTIFACTS / "BiGRU_Model.keras"   # file name must match the name in your GitHub repo
 TOKENIZER_PATH = ARTIFACTS / "tokenizer.pkl"
 MAX_LEN = 50  # must match pad_sequences(maxlen=50) used in training
 
@@ -42,6 +43,19 @@ def predict(text: str) -> np.ndarray:
 
 
 st.title("🎭 Emotion Classifier")
+
+# ---- TEMPORARY DEBUG: delete this whole block once the app works ----
+with st.expander("Debug: model file check", expanded=True):
+    st.write("Artifacts folder exists:", ARTIFACTS.exists())
+    if ARTIFACTS.exists():
+        st.write("Files:", [(p.name, p.stat().st_size) for p in ARTIFACTS.iterdir()])
+    st.write("Model path:", str(MODEL_PATH), "| exists:", MODEL_PATH.exists())
+    if MODEL_PATH.exists():
+        st.write("Size (bytes):", MODEL_PATH.stat().st_size)
+        st.write("Valid zip:", zipfile.is_zipfile(MODEL_PATH))
+        st.write("First bytes:", MODEL_PATH.read_bytes()[:30])
+# ---- END DEBUG ----
+
 st.write(
     "Type a sentence and a Bi-directional GRU model will predict which of six emotions it expresses: "
     "sadness, joy, love, anger, fear or surprise."

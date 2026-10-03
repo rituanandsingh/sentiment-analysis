@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 ARTIFACTS = Path(__file__).parent / "Artifacts"
-MODEL_PATH = ARTIFACTS / "BiGRU_Modle.keras"   # file name exactly as saved in the notebook
+MODEL_PATH = ARTIFACTS / "BiGRU_Model.keras"   # file name exactly as saved in the notebook
 TOKENIZER_PATH = ARTIFACTS / "tokenizer.pkl"
 MAX_LEN = 50  # must match pad_sequences(maxlen=50) used in training
 
